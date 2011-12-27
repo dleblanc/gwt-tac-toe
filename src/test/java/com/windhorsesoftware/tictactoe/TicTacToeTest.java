@@ -2,22 +2,22 @@ package com.windhorsesoftware.tictactoe;
 
 import org.junit.Test;
 
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.*;
+import static org.hamcrest.Matchers.*;
 
-class Board {
-	
-	boolean isFinished() {
-		return false;
-	}
-}
+// TODO: switch the rest to hamcrest matchers 
 
 public class TicTacToeTest {
 
 	@Test
 	public void empyBoardIsNotFinished() throws Exception {
-		Board board = new Board();
-		assertFalse(board.isFinished());
+		Board board = BoardBuilder.makeBoard(
+				"_ _ _",
+				"_ _ _",
+				"_ _ _");
+
+		// TODO: change to throw an exception, and provide an isFinished() method.
+		assertNull(board.getWinner());
 	}
 	
 	
@@ -27,21 +27,6 @@ public class TicTacToeTest {
 				"X X X",
 				"_ _ _",
 				"_ _ _");
-
-		assertEquals(Mark.X, board.getWinner());
-	}
-	
-	@Test
-	public void getWinnerWithFiveInARowOnLargerBoard() throws Exception {
-		Board board = BoardBuilder.makeBoardWithWinLengthOf(5,
-				"_ X X X X X _ _",
-				"_ _ _ _ _ _ _ _",
-				"_ _ _ _ _ _ _ _",
-				"_ _ _ _ _ _ _ _",
-				"_ _ _ _ _ _ _ _",
-				"_ _ _ _ _ _ _ _",
-				"_ _ _ _ _ _ _ _",
-				"_ _ _ _ _ _ _ _");
 
 		assertEquals(Mark.X, board.getWinner());
 	}
@@ -75,27 +60,24 @@ public class TicTacToeTest {
 
 		assertEquals(Mark.O, board.getWinner());
 	}
-	
+
 	@Test
-	public void simpleHashcodeTest() throws Exception {
+	public void isFinishedReturnsTrueOnWinningBoard() throws Exception {
 		Board board = BoardBuilder.makeBoard(
 				"O _ _",
 				"O _ _",
 				"O _ _");
 
-		Board secondBoard = BoardBuilder.makeBoard(
+		assertThat(board.isFinished(), equalTo(true));
+	}
+
+	@Test
+	public void isFinishedReturnsFalseOnBoardWithoutWin() throws Exception {
+		Board board = BoardBuilder.makeBoard(
 				"O _ _",
-				"O _ _",
+				"_ _ _",
 				"O _ _");
 
-		assertEquals(board.hashCode(), secondBoard.hashCode());
-		
-		Board notEqualBoard = BoardBuilder.makeBoard(
-				"O _ _",
-				"O _ _",
-				"O _ X");
-		
-		assertFalse(board.hashCode() == notEqualBoard.hashCode());
-		
-	}	
+		assertThat(board.isFinished(), equalTo(false));
+	}
 }

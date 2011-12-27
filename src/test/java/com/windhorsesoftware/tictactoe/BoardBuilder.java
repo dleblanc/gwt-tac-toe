@@ -25,7 +25,7 @@ public class BoardBuilder {
 				else {
 					throw new RuntimeException("unknown element type: " + elementType);
 				}
-				board.setMark(row, col, spaces);
+				board.setCell(Position.getPosition(row, col), spaces);
 				col++;
 			}
 			row++;

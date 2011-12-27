@@ -2,21 +2,23 @@ package com.windhorsesoftware.tictactoe;
 
 import java.util.*;
 
+// TODO: unify language around Cell/Space/Position
+
 public class Board {
 	public final int size;
 	private final int winLength;
 	
-	private Mark[][] spaces;
+	private Mark[][] cells;
 	private List<Position[]> sequenceIndexes;
 	
 	public Board(int size, int winLength) {
 		this.size = size;
 		this.winLength = winLength;
-		spaces = new Mark[size][size];
+		cells = new Mark[size][size];
 		
 		for (int row = 0; row < size; row++) {
 			for (int col = 0; col < size; col++) {
-				spaces[row][col] = Mark.EMPTY;
+				cells[row][col] = Mark.EMPTY;
 			}
 		}
 	
@@ -55,39 +57,26 @@ public class Board {
 		}
 		
 	}
-
-	public Mark space(int row, int col) {
-		return spaces[row][col];
+	
+	public Mark getCell(Position position) {
+		return cells[position.row][position.col];
 	}
 
 	// TODO: have this take a position instead?
-	public void setMark(int row, int col, Mark space) {
-		spaces[row][col] = space;
+	public void setCell(Position position, Mark mark) {
+		cells[position.row][position.col] = mark;
 	}
-
-	// TODO: break out 'iterate' method, and have it call a command for every element.
+	
 	public List<Position> generatePossibleMoves() {
 		ArrayList<Position> positions = new ArrayList<Position>();
 		for (int row = 0; row < size; row++) {
 			for (int col = 0; col < size; col++) {
-				if (spaces[row][col] == Mark.EMPTY) {
+				if (cells[row][col] == Mark.EMPTY) {
 					positions.add(Position.getPosition(row, col));
 				}
 			}
 		}
 		return positions;
-	}
-
-	/**
-	 * BIG NOTE: These methods actually mutate the board - this is done so we don't go creating a whole bunch of new copies of boards 
-	 * in the evaluations of our moves
-	 */
-	public void applyMove(Position move, Mark playerMark) {
-		setMark(move.row, move.col, playerMark);
-	}
-	
-	public void clearSpace(Position move) {
-		setMark(move.row, move.col, Mark.EMPTY);
 	}
 
 	public Mark getWinner() {
@@ -100,13 +89,17 @@ public class Board {
 		return null;
 	}
 
+	public boolean isEmpty(Position position) {
+		return getCell(position) == Mark.EMPTY;
+	}	
+	
 	@Override
 	public String toString() {
 		StringBuilder result = new StringBuilder();
 		for (int i = 0; i < size; i++) {
 				
 			for (int j = 0; j < size; j++) {
-				result.append(spaces[i][j] + "\t");
+				result.append(cells[i][j] + "\t");
 			}
 			result.append("\n");
 		}
@@ -138,6 +131,11 @@ public class Board {
 	}
 
 	private Mark getMarkForPosition(Position position) {
-		return spaces[position.row][position.col];
-	}	
+		return cells[position.row][position.col];
+	}
+
+	public boolean isFinished() {
+		return getWinner() != null;
+	}
+
 }
