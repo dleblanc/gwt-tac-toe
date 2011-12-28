@@ -8,19 +8,21 @@
 			width: 12em;
 			height: 12em;
 			display: inline-block;
-			background-color: #87CEEB;
+			background-color: #999999;
 			opacity: 0.4;
 			margin: 2em;
 		}
 		
 		.cellStateX {
-			background-image: url(http://www.clker.com/cliparts/5/u/w/z/E/3/x-marks-the-spot-md.png);
-			background-position: center center;	
+			background-image: url(http://www.clker.com/cliparts/5/u/w/z/E/3/x-marks-the-spot-th.png);
+			background-position: center center;
+			background-repeat: no-repeat;
 		}
 		
 		.cellStateO {
-			background-image: url(http://www.clker.com/cliparts/e/8/a/5/11971188101556035080Chrisdesign_Effect_Letters_alphabet_silver_15.svg.med.png);
-			background-position: center center;	
+			background-image: url(http://www.clker.com/cliparts/e/8/a/5/11971188101556035080Chrisdesign_Effect_Letters_alphabet_silver_15.svg.thumb.png);
+			background-position: center center;
+			background-repeat: no-repeat;	
 		}
 		
 		.cellStateEmpty {

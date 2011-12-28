@@ -54,5 +54,22 @@ public class GamePresenterTest {
 		verify(mockView).resetView();
 	}
 	
+	@Test
+	public void whenThereIsADrawItInformsTheViewAndResetsTheBoardAndView() throws Exception {
+		Board board = BoardBuilder.makeBoard(
+				"_ X O",
+				"O X X",
+				"X O O");
+
+		GamePresenter presenter = new GamePresenter(mockView, board);
+		Position position = Position.getPosition(0,  0);
+		
+		presenter.positionClicked(position, Mark.O);
+
+		verify(mockView).gameWasADraw();
+		assertThat(presenter.getBoard().getCell(position), equalTo(Mark.EMPTY));
+		
+		verify(mockView).resetView();
+	}	
 	// TODO: add a test for statemate - game is over but no winner (provide reset button?)
 }

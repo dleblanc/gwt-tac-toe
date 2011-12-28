@@ -11,4 +11,6 @@ public interface GameView {
 	void setCellOccupied(Position position, Mark mark);
 
 	void resetView();
+
+	void gameWasADraw();
 }

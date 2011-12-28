@@ -7,7 +7,7 @@ import static org.hamcrest.Matchers.*;
 
 // TODO: switch the rest to hamcrest matchers 
 
-public class TicTacToeTest {
+public class BoardTest {
 
 	@Test
 	public void empyBoardIsNotFinished() throws Exception {
@@ -16,8 +16,7 @@ public class TicTacToeTest {
 				"_ _ _",
 				"_ _ _");
 
-		// TODO: change to throw an exception, and provide an isFinished() method.
-		assertNull(board.getWinner());
+		assertThat(board.getWinner(), nullValue());
 	}
 	
 	
@@ -28,7 +27,7 @@ public class TicTacToeTest {
 				"_ _ _",
 				"_ _ _");
 
-		assertEquals(Mark.X, board.getWinner());
+		assertThat(board.getWinner(), equalTo(Mark.X));
 	}
 	
 	@Test
@@ -38,7 +37,7 @@ public class TicTacToeTest {
 				"_ O _",
 				"_ _ O");
 
-		assertEquals(Mark.O, board.getWinner());
+		assertThat(board.getWinner(), equalTo(Mark.O));
 	}	
 	
 	@Test
@@ -48,7 +47,7 @@ public class TicTacToeTest {
 				"_ X _",
 				"X _ _");
 
-		assertEquals(Mark.X, board.getWinner());
+		assertThat(board.getWinner(), equalTo(Mark.X));
 	}	
 	
 	@Test
@@ -58,7 +57,7 @@ public class TicTacToeTest {
 				"O _ _",
 				"O _ _");
 
-		assertEquals(Mark.O, board.getWinner());
+		assertThat(board.getWinner(), equalTo(Mark.O));
 	}
 
 	@Test
@@ -79,5 +78,26 @@ public class TicTacToeTest {
 				"O _ _");
 
 		assertThat(board.isFinished(), equalTo(false));
+	}
+	
+	@Test
+	public void isDrawReturnsTrueOnBoardWithStatemate() throws Exception {
+		Board board = BoardBuilder.makeBoard(
+				"O X O",
+				"O X X",
+				"X O O");
+
+		assertThat(board.isFinished(), equalTo(true));
+		assertThat(board.isDraw(), equalTo(true));
+	}
+
+	@Test
+	public void isDrawReturnsFalseOnBoardWithWin() throws Exception {
+		Board board = BoardBuilder.makeBoard(
+				"O X X",
+				"X O O",
+				"X X X");
+
+		assertThat(board.isDraw(), equalTo(false));
 	}
 }

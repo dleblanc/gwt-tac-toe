@@ -96,7 +96,7 @@ public class Board {
 				return winner;
 			}
 		}
-		return null;
+		return null; // Could also return Mark.EMPTY here to indicate no winner yet
 	}
 
 	public boolean isEmpty(Position position) {
@@ -109,6 +109,27 @@ public class Board {
 				setCell(Position.getPosition(row, col), Mark.EMPTY);
 			}
 		}
+	}
+
+	public boolean isFinished() {
+		return getWinner() != null || isDraw();
+	}
+
+	public boolean isDraw() {
+		if (getWinner() != null) {
+			return false;
+		}
+		
+		int emptyCount = 0;
+		for (Mark[] row : cells) {
+			for (Mark mark : row) {
+				if (mark == Mark.EMPTY) {
+					emptyCount += 1;
+					break;
+				}
+			}
+		}
+		return emptyCount == 0;
 	}
 	
 	@Override
@@ -151,9 +172,4 @@ public class Board {
 	private Mark getMarkForPosition(Position position) {
 		return cells[position.row][position.col];
 	}
-
-	public boolean isFinished() {
-		return getWinner() != null;
-	}
-
 }

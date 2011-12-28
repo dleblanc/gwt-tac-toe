@@ -24,7 +24,12 @@ public class GamePresenter {
 		gameView.setCellOccupied(position, mark);
 		
 		if (board.isFinished()) {
-			gameView.gameWasWon(board.getWinner());
+			if (board.isDraw()) {
+				gameView.gameWasADraw();
+			}
+			else {
+				gameView.gameWasWon(board.getWinner());
+			}
 			
 			this.board.reset();
 			gameView.resetView();

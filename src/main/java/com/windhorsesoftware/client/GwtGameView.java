@@ -61,6 +61,10 @@ public class GwtGameView extends Composite implements GameView {
 	public void gameWasWon(Mark mark) {
 		Window.alert("Game won by " + mark.toString());
 	}
+	
+	public void gameWasADraw() {
+		Window.alert("Game was a draw");
+	}
 
 	public void setCellOccupied(Position position, Mark mark) {
 		FocusWidget cell = cellWidgets[position.row][position.col];
