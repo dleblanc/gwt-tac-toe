@@ -36,8 +36,6 @@ public class GwtGameView extends Composite implements GameView {
 	// http://code.google.com/p/google-gin/issues/detail?id=43 (lazy load the
 	// presenter via a guice Provider)
 	private final Provider<GamePresenter> presenterProvider;
-	
-	private Mark playerMark = Mark.X;
 
 	@Inject
 	public GwtGameView(Provider<GamePresenter> presenterProvider) {
@@ -109,8 +107,7 @@ public class GwtGameView extends Composite implements GameView {
 				final int thisCol = col;
 				ClickHandler clickHandler = new ClickHandler() {
 					public void onClick(ClickEvent event) {
-						presenterProvider.get().positionClicked(
-								Position.getPosition(thisRow, thisCol), getAndSwitchPlayer());
+						presenterProvider.get().positionClicked(Position.getPosition(thisRow, thisCol));
 					}
 
 				};
@@ -132,12 +129,5 @@ public class GwtGameView extends Composite implements GameView {
 						col);
 			}
 		}
-	}
-
-	private Mark getAndSwitchPlayer() {
-		// FIXME: this isn't good here - have the controller responsible for player selection
-		Mark mark = playerMark;
-		playerMark = playerMark.getOpposingPlayer();
-		return mark;
 	}
 }

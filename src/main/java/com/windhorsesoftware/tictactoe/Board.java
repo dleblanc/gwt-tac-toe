@@ -74,18 +74,6 @@ public class Board {
 		cells[position.row][position.col] = mark;
 	}
 	
-	public List<Position> generatePossibleMoves() {
-		ArrayList<Position> positions = new ArrayList<Position>();
-		for (int row = 0; row < size; row++) {
-			for (int col = 0; col < size; col++) {
-				if (cells[row][col] == Mark.EMPTY) {
-					positions.add(Position.getPosition(row, col));
-				}
-			}
-		}
-		return positions;
-	}
-
 	public Mark getWinner() {
 		for (Position[] positionList: sequenceIndexes) {
 			Mark winner = getWinnerForPositions(positionList);
@@ -127,19 +115,6 @@ public class Board {
 			}
 		}
 		return emptyCount == 0;
-	}
-	
-	@Override
-	public String toString() {
-		StringBuilder result = new StringBuilder();
-		for (int i = 0; i < size; i++) {
-				
-			for (int j = 0; j < size; j++) {
-				result.append(cells[i][j] + "\t");
-			}
-			result.append("\n");
-		}
-		return result.toString();
 	}
 	
 	/**

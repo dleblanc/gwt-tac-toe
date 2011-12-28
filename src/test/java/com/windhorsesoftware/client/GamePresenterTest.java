@@ -20,7 +20,7 @@ public class GamePresenterTest {
 		board.setCell(position, Mark.O);
 		
 		GamePresenter presenter = new GamePresenter(mockView, board);
-		presenter.positionClicked(position, Mark.X);
+		presenter.markPositionForPlayer(position, Mark.X);
 		
 		verify(mockView).cellIsOccupiedWarning(position);
 	}
@@ -30,7 +30,7 @@ public class GamePresenterTest {
 		
 		GamePresenter presenter = new GamePresenter(mockView, new Board(3, 3));
 		Position position = Position.getPosition(0,  0);
-		presenter.positionClicked(position, Mark.X);
+		presenter.markPositionForPlayer(position, Mark.X);
 
 		assertThat(presenter.getBoard().getCell(position), equalTo(Mark.X));
 		verify(mockView).setCellOccupied(position, Mark.X);
@@ -46,7 +46,7 @@ public class GamePresenterTest {
 		GamePresenter presenter = new GamePresenter(mockView, board);
 		Position position = Position.getPosition(0,  2);
 		
-		presenter.positionClicked(position, Mark.X);
+		presenter.markPositionForPlayer(position, Mark.X);
 
 		verify(mockView).gameWasWon(Mark.X);
 		assertThat(presenter.getBoard().getCell(position), equalTo(Mark.EMPTY));
@@ -64,11 +64,28 @@ public class GamePresenterTest {
 		GamePresenter presenter = new GamePresenter(mockView, board);
 		Position position = Position.getPosition(0,  0);
 		
-		presenter.positionClicked(position, Mark.O);
+		presenter.markPositionForPlayer(position, Mark.O);
 
 		verify(mockView).gameWasADraw();
 		assertThat(presenter.getBoard().getCell(position), equalTo(Mark.EMPTY));
 		
 		verify(mockView).resetView();
-	}	
+	}
+	
+	@Test
+	public void startsWithPlayerXAndAlternatesToO() throws Exception {
+		Board board = BoardBuilder.makeBoard(
+				"_ _ _",
+				"_ _ _",
+				"_ _ _");
+
+		GamePresenter presenter = new GamePresenter(mockView, board);
+		Position position = Position.getPosition(0,  0);
+		presenter.positionClicked(position);
+
+		Position secondPosition = Position.getPosition(0,  1);
+		presenter.positionClicked(secondPosition);
+		
+		assertThat(presenter.getBoard().getCell(secondPosition), equalTo(Mark.O));
+	}
 }

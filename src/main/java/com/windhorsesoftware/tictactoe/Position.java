@@ -25,13 +25,4 @@ public class Position {
 		// Implement a flyweight pattern so we don't create so many positions
 		return positions[row][col];
 	}
-	
-	@Override
-	public String toString() {
-		return "(" + row + "," + col + ")";
-	}
-	
-	public boolean equalTo(int row, int col) {
-		return row == this.row && col == this.col;
-	}
 }

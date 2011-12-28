@@ -7,14 +7,20 @@ import com.windhorsesoftware.tictactoe.*;
 public class GamePresenter {
 	private Board board;
 	private final GameView gameView;
+	private Mark currentPlayerMark = Mark.X;
 
 	@Inject
 	public GamePresenter(GameView gameView, Board board) {
 		this.gameView = gameView;
 		this.board = board; 
 	}
-
-	public void positionClicked(Position position, Mark mark) {
+	
+	public void positionClicked(Position position) {
+		markPositionForPlayer(position, currentPlayerMark);
+		currentPlayerMark = currentPlayerMark.getOpposingPlayer();
+	}
+	
+	void markPositionForPlayer(Position position, Mark mark) {
 		if (!board.isEmpty(position)) {
 			gameView.cellIsOccupiedWarning(position);
 			return;
@@ -39,4 +45,5 @@ public class GamePresenter {
 	public Board getBoard() {
 		return this.board;
 	}
+	
 }
