@@ -3,7 +3,7 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
 	xmlns:g='urn:import:com.google.gwt.user.client.ui'>
 
-	<ui:style>
+	<ui:style type="com.windhorsesoftware.client.GwtGameView.MyStyle">
 		.cell {
 			width: 12em;
 			height: 12em;
@@ -13,8 +13,22 @@
 			margin: 2em;
 		}
 		
-	</ui:style>
+		.cellStateX {
+			background-image: url(http://www.clker.com/cliparts/5/u/w/z/E/3/x-marks-the-spot-md.png);
+			background-position: center center;	
+		}
+		
+		.cellStateO {
+			background-image: url(http://www.clker.com/cliparts/e/8/a/5/11971188101556035080Chrisdesign_Effect_Letters_alphabet_silver_15.svg.med.png);
+			background-position: center center;	
+		}
+		
+		.cellStateEmpty {
+		}
 
+	</ui:style>
+	
+	
 	<!--  Gaa, this isn't pretty - otherwise I'd just code it up programatically, but then I'd have no widgets to show -->
 	<g:Grid ui:field="boardGrid">
 		<g:row>
