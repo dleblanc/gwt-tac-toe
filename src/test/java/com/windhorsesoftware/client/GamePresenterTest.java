@@ -71,5 +71,4 @@ public class GamePresenterTest {
 		
 		verify(mockView).resetView();
 	}	
-	// TODO: add a test for statemate - game is over but no winner (provide reset button?)
 }

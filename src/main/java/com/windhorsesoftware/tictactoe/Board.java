@@ -4,8 +4,6 @@ import java.util.*;
 
 import com.google.inject.Inject;
 
-// TODO: unify language around Cell/Space/Position
-
 public class Board {
 	private static final int DEFAULT_BOARD_SIZE = 3;
 	private static final int DEFAULT_BOARD_WIN_COUNT = 3;
@@ -72,7 +70,6 @@ public class Board {
 		return cells[position.row][position.col];
 	}
 
-	// TODO: have this take a position instead?
 	public void setCell(Position position, Mark mark) {
 		cells[position.row][position.col] = mark;
 	}
