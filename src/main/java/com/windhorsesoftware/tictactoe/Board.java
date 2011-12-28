@@ -2,14 +2,24 @@ package com.windhorsesoftware.tictactoe;
 
 import java.util.*;
 
+import com.google.inject.Inject;
+
 // TODO: unify language around Cell/Space/Position
 
 public class Board {
+	private static final int DEFAULT_BOARD_SIZE = 3;
+	private static final int DEFAULT_BOARD_WIN_COUNT = 3;
+
 	public final int size;
 	private final int winLength;
 	
 	private Mark[][] cells;
 	private List<Position[]> sequenceIndexes;
+	
+	@Inject
+	public Board() {
+		this(DEFAULT_BOARD_SIZE, DEFAULT_BOARD_WIN_COUNT);
+	}
 	
 	public Board(int size, int winLength) {
 		this.size = size;
@@ -91,7 +101,15 @@ public class Board {
 
 	public boolean isEmpty(Position position) {
 		return getCell(position) == Mark.EMPTY;
-	}	
+	}
+	
+	public void reset() {
+		for (int row = 0; row < DEFAULT_BOARD_SIZE; row++) {
+			for (int col = 0; col < DEFAULT_BOARD_SIZE; col++) {
+				setCell(Position.getPosition(row, col), Mark.EMPTY);
+			}
+		}
+	}
 	
 	@Override
 	public String toString() {

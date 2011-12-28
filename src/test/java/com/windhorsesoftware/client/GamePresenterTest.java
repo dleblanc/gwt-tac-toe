@@ -22,21 +22,22 @@ public class GamePresenterTest {
 		GamePresenter presenter = new GamePresenter(mockView, board);
 		presenter.positionClicked(position, Mark.X);
 		
-		verify(mockView).cellIsOccupied(position);
+		verify(mockView).cellIsOccupiedWarning(position);
 	}
 	
 	@Test
-	public void whenUserSelectsEmptyCellItModifiesTheBoard() throws Exception {
+	public void whenUserSelectsEmptyCellItModifiesTheBoardAndInformsTheViewOfSuccess() throws Exception {
 		
 		GamePresenter presenter = new GamePresenter(mockView, new Board(3, 3));
 		Position position = Position.getPosition(0,  0);
 		presenter.positionClicked(position, Mark.X);
 
 		assertThat(presenter.getBoard().getCell(position), equalTo(Mark.X));
+		verify(mockView).setCellOccupied(position, Mark.X);
 	}
 	
 	@Test
-	public void whenUserWinsAGameItInformsTheViewAndResetsTheGame() throws Exception {
+	public void whenUserWinsAGameItInformsTheViewAndResetsTheBoardAndView() throws Exception {
 		Board board = BoardBuilder.makeBoard(
 				"X X _",
 				"_ _ _",
@@ -49,5 +50,7 @@ public class GamePresenterTest {
 
 		verify(mockView).gameWasWon(Mark.X);
 		assertThat(presenter.getBoard().getCell(position), equalTo(Mark.EMPTY));
+		
+		verify(mockView).resetView();
 	}
 }
