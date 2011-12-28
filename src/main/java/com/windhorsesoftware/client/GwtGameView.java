@@ -1,6 +1,8 @@
 package com.windhorsesoftware.client;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.*;
+import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 import com.google.inject.*;
@@ -8,8 +10,13 @@ import com.windhorsesoftware.tictactoe.*;
 
 @Singleton
 public class GwtGameView extends Composite implements GameView {
+	interface MyUiBinder extends UiBinder<Widget, GwtGameView> {}
+	private static MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
 	
-	// Workaround for circular references - see http://code.google.com/p/google-gin/issues/detail?id=43
+	@UiField
+	Grid boardGrid; 
+	
+	// Workaround for circular references - see http://code.google.com/p/google-gin/issues/detail?id=43 (lazy load the presenter via a guice Provider)
 	private final Provider<GamePresenter> presenterProvider;
 	
 	@Inject
@@ -36,23 +43,11 @@ public class GwtGameView extends Composite implements GameView {
 		container.add(boardOutput);
 		container.add(applyButton);
 
-		initWidget(container);
+		initWidget(uiBinder.createAndBindUi(this));
 		
-		applyButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				int row = Integer.parseInt(rowField.getText());
-				int col = Integer.parseInt(colField.getText());
-				
-				GamePresenter presenter = presenterProvider.get();
-				
-				presenter.positionClicked(Position.getPosition(row, col), Mark.X);
-				
-				boardOutput.setText(presenter.getBoard().toString());
-			}
-		});
-
+		addClickHandlersForCells();
 	}
-	
+
 	public void cellIsOccupiedWarning(Position position) {
 		Window.alert("Cell is occupied!");
 	}
@@ -66,4 +61,25 @@ public class GwtGameView extends Composite implements GameView {
 
 	public void resetView() {
 	}
+
+	private void addClickHandlersForCells() {
+		// UIHandlers are for binding to one widget - so just iterate over them here
+		for (int row = 0; row < boardGrid.getRowCount(); row++) {
+			int cellCount = boardGrid.getCellCount(row);
+			for (int col = 0; col < cellCount; col++) {
+				
+				// Working around Java's implementation of anonymous inner classes (and their not being closures) 
+				final int thisRow = row;
+				final int thisCol = col;
+				
+				ClickHandler clickHandler = new ClickHandler() {
+					public void onClick(ClickEvent event) {
+						presenterProvider.get().positionClicked(Position.getPosition(thisRow, thisCol), Mark.X);
+					}
+				};
+				
+				((FocusWidget) boardGrid.getWidget(row, col)).addClickHandler(clickHandler);
+			}
+		}
+	}	
 }

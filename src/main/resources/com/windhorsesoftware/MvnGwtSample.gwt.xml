@@ -1,28 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module rename-to='MvnGwtSample'>
-  <!-- Inherit the core Web Toolkit stuff.                        -->
-  <inherits name='com.google.gwt.user.User' />
+	<!-- Inherit the core Web Toolkit stuff. -->
+	<inherits name='com.google.gwt.user.User' />
 
-  <!-- We need the JUnit module in the main module,               -->
-  <!-- otherwise eclipse complains (Google plugin bug?)           -->
-  <inherits name='com.google.gwt.junit.JUnit' />
+	<!-- We need the JUnit module in the main module, -->
+	<!-- otherwise eclipse complains (Google plugin bug?) -->
+	<inherits name='com.google.gwt.junit.JUnit' />
 
-  <!-- Inherit the default GWT style sheet.  You can change       -->
-  <!-- the theme of your GWT application by uncommenting          -->
-  <!-- any one of the following lines.                            -->
-  <inherits name='com.google.gwt.user.theme.standard.Standard' />
-  <!-- <inherits name='com.google.gwt.user.theme.chrome.Chrome'/> -->
-  <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
+	<!-- Inherit the default GWT style sheet. You can change -->
+	<!-- the theme of your GWT application by uncommenting -->
+	<!-- any one of the following lines. -->
+	<inherits name='com.google.gwt.user.theme.standard.Standard' />
+	<!-- <inherits name='com.google.gwt.user.theme.chrome.Chrome'/> -->
+	<!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/> -->
 
-  <!-- Other module inherits                                      -->
-  
-  <inherits name="com.google.gwt.inject.Inject"/>
+	<!-- Other module inherits -->
 
-  <!-- Specify the app entry point class.                         -->
-  <entry-point class='com.windhorsesoftware.client.MvnGwtSample' />
+	<inherits name="com.google.gwt.inject.Inject" />
 
-  <!-- Specify the paths for translatable code                    -->
-  <source path='client' />
-  <source path='tictactoe' />
+	<!-- Specify the app entry point class. -->
+	<entry-point class='com.windhorsesoftware.client.MvnGwtSample' />
+
+	<!-- Specify the paths for translatable code -->
+	<source path='client' />
+	<source path='tictactoe' />
+
+	<!-- Slightly more readable CSS -->
+	<set-property name="ClientBundle.enableInlining" value="false" />
+
+	<!-- turn off merging of CSS rules -->
+	<set-configuration-property name="CssResource.mergeEnabled"
+		value="false" />
+	<!-- produce human-readable CSS -->
+	<set-configuration-property name="CssResource.style"
+		value="pretty" />
 
 </module>

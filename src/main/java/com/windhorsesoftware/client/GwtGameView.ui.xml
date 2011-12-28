@@ -1,0 +1,58 @@
+<!-- TODO: stick this in src/main/resources -->
+
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+	xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+
+	<ui:style>
+		.cell {
+			width: 12em;
+			height: 12em;
+			display: inline-block;
+			background-color: #87CEEB;
+			opacity: 0.4;
+			margin: 2em;
+		}
+		
+	</ui:style>
+
+	<!--  Gaa, this isn't pretty - otherwise I'd just code it up programatically, but then I'd have no widgets to show -->
+	<g:Grid ui:field="boardGrid">
+		<g:row>
+			<g:customCell>
+				<g:Button addStyleNames="{style.cell}"/>
+			</g:customCell>
+			<g:customCell>
+				<g:Button addStyleNames="{style.cell}"/>
+			</g:customCell>
+			<g:customCell>
+				<g:Button addStyleNames="{style.cell}"/>
+			</g:customCell>
+		</g:row>
+
+		<g:row>
+			<g:customCell>
+				<g:Button addStyleNames="{style.cell}"/>
+			</g:customCell>
+			<g:customCell>
+				<g:Button addStyleNames="{style.cell}"/>
+			</g:customCell>
+			<g:customCell>
+				<g:Button addStyleNames="{style.cell}"/>
+			</g:customCell>
+		</g:row>
+
+		<g:row>
+			<g:customCell>
+				<g:Button addStyleNames="{style.cell}"/>
+			</g:customCell>
+			<g:customCell>
+				<g:Button addStyleNames="{style.cell}"/>
+			</g:customCell>
+			<g:customCell>
+				<g:Button addStyleNames="{style.cell}"/>
+			</g:customCell>
+		</g:row>
+
+	</g:Grid>
+
+</ui:UiBinder>
